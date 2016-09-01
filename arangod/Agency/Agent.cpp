@@ -511,20 +511,6 @@ read_ret_t Agent::read(query_t const& query) {
     }
   }
 
-  // Still leading?
-  size_t good = 0; 
-  for (auto const& i : _lastAcked) {
-    std::chrono::duration<double> m =
-      std::chrono::system_clock::now() - i.second;
-    if(0.9*_config.minPing() > m.count()) {
-      ++good;
-    }
-  }
-  
-  if (good < size() / 2) {
-    _constituent.candidate();
-  }
-  
   // Retrieve data from readDB
   auto result = std::make_shared<arangodb::velocypack::Builder>();
   std::vector<bool> success = _readDB.read(query, result);
