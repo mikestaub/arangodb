@@ -506,7 +506,7 @@ exports.historianAverage = function () {
 
   var clusterId;
 
-  if (cluster.isCluster()) {
+  if (cluster.isCluster() && (clusterId !== undefined && clusterId !== null)) {
     clusterId = global.ArangoServerState.id();
   }
 
